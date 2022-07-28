@@ -1,6 +1,6 @@
 // --- index.js ---
 // • This is the start (entry-point) of our application.
-// • Mongoose is used to make communication with MongoDB easy and simple
+// • Mongoosee is used to make communication with MongoDB easy and simple
 // -----------------------------------------------------------------------------
 
 const express = require('express')
