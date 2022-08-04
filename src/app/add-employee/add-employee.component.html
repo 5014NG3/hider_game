@@ -1,0 +1,5 @@
+<h2 class="text-center m-5">Add a New Employee</h2>
+<!-- uses mean-employee-form  which calls EmployeeService to create an employee 
+this emits an event when the employee is created and the AddEmployeeComponent
+wil navigate bacak to the table of employees-->
+<mean-employee-form (formSubmitted)="addEmployee($event)"></mean-employee-form>
