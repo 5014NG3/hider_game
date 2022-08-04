@@ -66,6 +66,9 @@ then start server
 
 run app using with npx ts-node src/server.ts
 
+
+<-                      Server ^ Client v                                  ->
+
 building RESTful API
 
 GET, POST, PUT, AND DELETE -> corresponds to CRUD
