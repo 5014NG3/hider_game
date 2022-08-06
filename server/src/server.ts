@@ -4,6 +4,8 @@ import cors from "cors";
 import express from "express";
 import {connectToDB} from "./database";
 import {employeeRouter} from "./employee.routes"
+//TODO
+//import {roomRouter} from "./room.routes"
 
 //load env variables from the .env file, where 
 //the ATLAS_URI is configed
@@ -23,6 +25,9 @@ connectToDB(ATLAS_URI)
 
         //use the endpoints
         app.use("/employees", employeeRouter);
+
+        //TODO
+        //app.use("/rooms",roomRouter);
 
 
         //start the Express server
