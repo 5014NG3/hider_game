@@ -88,7 +88,9 @@ import { employeeRouter } from "./employee.routes";
 
 restart server after adding the endpoints
 
-npx ts-node src/server.ts
+navigate to the file
+
+npx ts-node server.ts
 
 Angular web app - interacts with our RESTful API. use Angular CLI
 to scaffold the app. to install it use npm install -g @angular/cli 
