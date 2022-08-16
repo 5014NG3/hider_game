@@ -2,4 +2,6 @@
 <!-- uses mean-employee-form  which calls EmployeeService to create an employee 
 this emits an event when the employee is created and the AddEmployeeComponent
 wil navigate bacak to the table of employees-->
+
+<!-- addEmployee function is in add-employee.component.ts -->
 <mean-employee-form (formSubmitted)="addEmployee($event)"></mean-employee-form>

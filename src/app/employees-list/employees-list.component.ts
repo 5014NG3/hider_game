@@ -9,6 +9,8 @@ import { EmployeeService  } from '../employee.service';
 })
 export class EmployeesListComponent implements OnInit {
 
+  //need this shit for the images
+
   employees$: Observable<Employee[]> = new Observable();
 
   constructor(private employeesService: EmployeeService) { }

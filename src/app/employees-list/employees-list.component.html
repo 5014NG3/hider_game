@@ -8,6 +8,7 @@
               <th>Position</th>
               <th>Level</th>
               <th>Action</th>
+              <th>Upload</th>
           </tr>
       </thead>
 
@@ -24,6 +25,11 @@
 
                   <button class="btn btn-primary me-1" [routerLink]="['edit/', employee._id]">Edit</button>
                   <button class="btn btn-danger" (click)="deleteEmployee(employee._id || '')">Delete</button>
+                  
+              </td>
+              <td>
+                <!-- Replace with the click command to open up the window that lets the user upload shit-->
+                <button class="btn btn-primary me-1" [routerLink]="['edit/', employee._id]">Upload</button>
               </td>
           </tr>
       </tbody>
