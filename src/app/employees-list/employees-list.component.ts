@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from '../employee';
 import { EmployeeService  } from '../employee.service';
+import { Pic } from '../pic';
+import { PicService } from '../pic.service';
 
 @Component({
   selector: 'mean-employees-list',
@@ -13,16 +15,25 @@ export class EmployeesListComponent implements OnInit {
 
   employees$: Observable<Employee[]> = new Observable();
 
-  constructor(private employeesService: EmployeeService) { }
+  pics$: Observable<Pic[]> = new Observable();
+  
+  constructor(private employeesService: EmployeeService, private picsService: PicService) { }
 
   //called when component is rendered on the page
   ngOnInit(): void {
     this.fetchEmployees();
+    this.fetchPics();
   }
 
   deleteEmployee(id: string) : void {
     this.employeesService.deleteEmployee(id).subscribe({
       next: () => this.fetchEmployees()
+    });
+  }
+
+  deletePic(id: string) : void {
+    this.picsService.deletePic(id).subscribe({
+      next: () => this.fetchPics()
     });
   }
 
@@ -35,6 +46,10 @@ export class EmployeesListComponent implements OnInit {
   // as the data is available.
   private fetchEmployees(): void {
     this.employees$ = this.employeesService.getEmployees();
+  }
+
+  private fetchPics(): void {
+    this.pics$ = this.picsService.getPics();
   }
 
 }

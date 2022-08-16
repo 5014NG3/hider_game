@@ -4,6 +4,7 @@ import { EmployeesListComponent } from './employees-list/employees-list.componen
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
 
+//don't need to add route for the upload link (i think)
 const routes: Routes = [
   {path: '', redirectTo: 'employees', pathMatch: 'full'},
   {path: 'employees', component: EmployeesListComponent}, 
