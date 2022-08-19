@@ -32,6 +32,8 @@ export class EmployeeService {
     return this.httpClient.get<Employee>(`${this.url}/employees/${id}`);
   }
 
+
+  //maybe i can change the type when creating pics in the database 
   createEmployee(employee: Employee) : Observable<string> {
     return this.httpClient.post(`${this.url}/employees`, employee, {responseType: 'text'});
   }

@@ -167,3 +167,12 @@ makes: /client/src/app/edit-employee/edit-employee.component.ts
 add navigation to our new pages in /client/src/app/app-routing.module.ts
  { path: 'employees/new', component: AddEmployeeComponent }, // <-- add this line
  { path: 'employees/edit/:id', component: EditEmployeeComponent }]; // <-- add this line
+
+
+
+
+ notes: 
+ origin of operations: src / object.routes.ts , uses post for example crud operations
+ called in the front end via the employee.service, used createEmployee(has http.post)
+ which is
+

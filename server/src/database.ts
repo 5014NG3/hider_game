@@ -81,14 +81,10 @@ async function asv_emp(db: mongodb.Db) {
         $jsonSchema: {
             bsonType: "object",
             //fields that are saved
-            required: ["name", "imagePath"],
+            required: ["imagePath"],
             additionalProperties: false,
             properties: {
                 _id: {},
-                name: {
-                    bsonType: "string",
-                    description: "'name' is required and is a string",
-                },
                 imagePath: {
                     bsonType: "string",
                     description: "'imagePath' is required and is a string",

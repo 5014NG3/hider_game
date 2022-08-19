@@ -1,5 +1,5 @@
 export interface Pic {
-    name: string;
+    //name: string;
     imagePath: string;
     _id?: string;
  }
