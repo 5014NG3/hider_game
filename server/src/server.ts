@@ -3,10 +3,13 @@ import * as dotenv from "dotenv";
 import cors from "cors";
 import express from "express";
 import {connectToDB} from "./database";
-import {employeeRouter} from "./employee.routes"
+import {employeeRouter} from "./employee.routes";
 //TODO
 //import {roomRouter} from "./room.routes"
-import {picRouter} from "./pic.routes"
+import {picRouter} from "./pic.routes";
+import path from "path";
+import bodyParser from "body-parser"
+
 
 //load env variables from the .env file, where 
 //the ATLAS_URI is configed
@@ -22,10 +25,12 @@ if(!ATLAS_URI) {
 connectToDB(ATLAS_URI)
     .then(() => {
         const app = express();
+        app.use(bodyParser.json())
         app.use(cors());
 
         //use the endpoints
         app.use("/employees", employeeRouter);
+        app.use('/images', express.static(path.join('images')));
         //TODO
         app.use("/pics",picRouter);
 
