@@ -1,9 +1,12 @@
 import * as express from "express";
 import * as mongodb from "mongodb";
 import { collections } from "./database";
+import { storage } from "./storage";
+import { Pic } from "./pic";
 
 export const picRouter = express.Router();
 picRouter.use(express.json());
+
 
 //'GET /pics' endpoint, gets all pics in the db
 // route is '/' because we'll register all endpoints from this 
@@ -21,9 +24,10 @@ picRouter.get("/", async (_req, res) => {
 
 });
 
-
+//not necessary since images saved on the server side, todo modifiy to accomodate for getting from server side, or m
+//might not even need to have this crud operation on this end of the code
 //'GET /pics/:id' endpoint allows get single pic by ID.
-
+/*
 picRouter.get("/:id", async(req,res) => {
 
     //? - optional chaining operator, enables you to read value
@@ -56,14 +60,15 @@ picRouter.get("/:id", async(req,res) => {
     }
 
 });
+*/
 
 //'POST /pics' endpoint allow create new pic
 
-picRouter.post("/",async (req,res) => {
+picRouter.post("/",storage,async (req,res) => {
     //receive pic object from the client in request body
     try {
         //access data ins string/JSON object from the client side
-        const pic = req.body;
+        const pic: Pic = {imagePath: 'http://localhost:5200/images/' + req.file.filename};
         //insert to collections, receive, insertOne method , inserts
         //pic to the db, if success, send 201 Created with ID of 
         //pic, o/w send 500 Internal Server Error
@@ -122,7 +127,8 @@ picRouter.put("/:id", async(req,res) => {
 
 
 //'DELETE /pics/:id' endpoint allow delete an existing pic.
-
+//not necessary since image is on server side
+/*
 picRouter.delete("/:id", async(req,res) => {
 
     try{
@@ -152,3 +158,4 @@ picRouter.delete("/:id", async(req,res) => {
     }
 
 });
+*/

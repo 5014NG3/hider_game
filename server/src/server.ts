@@ -6,6 +6,7 @@ import {connectToDB} from "./database";
 import {employeeRouter} from "./employee.routes"
 //TODO
 //import {roomRouter} from "./room.routes"
+import {picRouter} from "./pic.routes"
 
 //load env variables from the .env file, where 
 //the ATLAS_URI is configed
@@ -25,9 +26,8 @@ connectToDB(ATLAS_URI)
 
         //use the endpoints
         app.use("/employees", employeeRouter);
-
         //TODO
-        //app.use("/rooms",roomRouter);
+        app.use("/pics",picRouter);
 
 
         //start the Express server
