@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Employee } from '../employee';
 import { EmployeeService  } from '../employee.service';
@@ -28,16 +28,16 @@ export class EmployeesListComponent implements OnInit {
   ngOnInit(): void {
     this.fetchEmployees();
     this.fetchPics();
+    this.form = new FormGroup({
+      image: new FormControl(null)
+    });
+    
   }
 
-  deleteEmployee(id: string) : void {
-    this.employeesService.deleteEmployee(id).subscribe({
-      next: () => this.fetchEmployees()
-    });
-  }
 
   onFileSelect(event: Event) {
     const file = (event.target as HTMLInputElement).files[0];
+    console.log(file);
     this.form.patchValue({ image: file });
     const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg"];
     if (file && allowedMimeTypes.includes(file.type)) {
@@ -48,6 +48,20 @@ export class EmployeesListComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+  
+  submitPic() {
+
+  }
+
+  deleteEmployee(id: string) : void {
+    this.employeesService.deleteEmployee(id).subscribe({
+      next: () => this.fetchEmployees()
+    });
+  }
+
+
+
+
 
   /*
   deletePic(id: string) : void {
