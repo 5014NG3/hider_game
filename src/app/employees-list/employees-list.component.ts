@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Employee } from '../employee';
 import { EmployeeService  } from '../employee.service';
@@ -16,6 +17,10 @@ export class EmployeesListComponent implements OnInit {
   employees$: Observable<Employee[]> = new Observable();
 
   pics$: Observable<Pic[]> = new Observable();
+
+  form: FormGroup;
+
+  imageData: string;
   
   constructor(private employeesService: EmployeeService, private picsService: PicService) { }
 
@@ -31,11 +36,26 @@ export class EmployeesListComponent implements OnInit {
     });
   }
 
+  onFileSelect(event: Event) {
+    const file = (event.target as HTMLInputElement).files[0];
+    this.form.patchValue({ image: file });
+    const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg"];
+    if (file && allowedMimeTypes.includes(file.type)) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imageData = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  /*
   deletePic(id: string) : void {
     this.picsService.deletePic(id).subscribe({
       next: () => this.fetchPics()
     });
   }
+  */
 
   //from employ service use getemployees service this return an 
   //observable, subscribe to it with a async pipe in the template
