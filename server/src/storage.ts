@@ -14,6 +14,7 @@ export const diskStorage = multer.diskStorage({
         const fileType = mimeType[1];
         const fileName = file.originalname + '.' + fileType;
         callback(null,fileName);
+        console.log("gtg");
 
     }
 });

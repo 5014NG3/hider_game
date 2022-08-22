@@ -176,3 +176,12 @@ add navigation to our new pages in /client/src/app/app-routing.module.ts
  called in the front end via the employee.service, used createEmployee(has http.post)
  which is
 
+
+can be in root
+ ng serve -o
+
+
+
+where server is:
+ npx ts-node server.ts
+
