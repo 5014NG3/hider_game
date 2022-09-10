@@ -2,6 +2,7 @@ import * as mongodb from "mongodb";
 import { Employee } from "./employee";
 
 
+const sqlite3 = require('sqlite3').verbose();
 
 
 
@@ -16,7 +17,6 @@ export async function connectToDB(uri:string) {
     const client = new mongodb.MongoClient(uri);
     await client.connect();
     
-    const sqlite3 = require('sqlite3').verbose();
 
 
     let sdb = new sqlite3.Database('../game.db', (err : Error) => {
@@ -24,19 +24,8 @@ export async function connectToDB(uri:string) {
           console.error(err.message);
         }
         console.log('Connected to the game database.');
-        //sdb.run('CREATE TABLE PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)');
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [69,0,0], (err: Error) => {
-            if(err) {
-                return console.log(err.message); 
-            }
-            console.log('Row was added to the table: ${this.lastID}');
-        });
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [1337,11,43], (err: Error) => {
-            if(err) {
-                return console.log(err.message); 
-            }
-            console.log('Row was added to the table: ${this.lastID}');
-        });
+
+       game_emp(sdb);
         
     });
 
@@ -74,6 +63,24 @@ export async function connectToDB(uri:string) {
 //might have to create validation for the different data
 //that is saved to the database collections
 //applySchemaValdiation = asv
+
+
+async function game_emp(sdb: typeof sqlite3.Database){
+    sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [73,0,0], (err: Error) => {
+        if(err) {
+            return console.log(err.message); 
+        }
+        console.log('Row was added to the table: ${this.lastID}');
+    });
+    sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [47,11,43], (err: Error) => {
+        if(err) {
+            return console.log(err.message); 
+        }
+        console.log('Row was added to the table: ${this.lastID}');
+    });
+
+
+}
 
 
 
