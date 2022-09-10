@@ -3,8 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Employee } from '../employee';
 import { EmployeeService  } from '../employee.service';
-import { Pic } from '../pic';
-import { PicService } from '../pic.service';
+
 
 @Component({
   selector: 'mean-employees-list',
@@ -16,18 +15,17 @@ export class EmployeesListComponent implements OnInit {
 
   employees$: Observable<Employee[]> = new Observable();
 
-  pics$: Observable<Pic[]> = new Observable();
+
 
   form: FormGroup;
 
   imageData: string;
   
-  constructor(private employeesService: EmployeeService, private picsService: PicService) { }
+  constructor(private employeesService: EmployeeService) { }
 
   //called when component is rendered on the page
   ngOnInit(): void {
     this.fetchEmployees();
-    this.fetchPics();
     this.form = new FormGroup({
       image: new FormControl(null)
     });
@@ -82,8 +80,6 @@ export class EmployeesListComponent implements OnInit {
     this.employees$ = this.employeesService.getEmployees();
   }
 
-  private fetchPics(): void {
-    this.pics$ = this.picsService.getPics();
-  }
+
 
 }

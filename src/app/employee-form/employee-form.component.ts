@@ -18,6 +18,7 @@ export class EmployeeFormComponent implements OnInit {
 
   @Input()
   initialState: BehaviorSubject<Employee> = new BehaviorSubject({});
+  
 
 
   //is an event emitter that will emit form values whenever the form is submitted

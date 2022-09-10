@@ -3,6 +3,8 @@ import { Router } from '@angular/router'
 import { Employee } from '../employee';
 import { EmployeeService } from '../employee.service';
 
+
+
 @Component({
   selector: 'mean-add-employee',
   templateUrl: './add-employee.component.html',
@@ -27,5 +29,7 @@ export class AddEmployeeComponent {
         }
       });
   }
+
+
 
 }

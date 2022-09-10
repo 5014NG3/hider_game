@@ -6,7 +6,6 @@ import {connectToDB} from "./database";
 import {employeeRouter} from "./employee.routes";
 //TODO
 //import {roomRouter} from "./room.routes"
-import {picRouter} from "./pic.routes";
 import path from "path";
 import bodyParser from "body-parser"
 
@@ -32,7 +31,6 @@ connectToDB(ATLAS_URI)
         app.use("/employees", employeeRouter);
         app.use('/images', express.static(path.join('images')));
         //TODO
-        app.use("/pics",picRouter);
 
 
         //start the Express server
