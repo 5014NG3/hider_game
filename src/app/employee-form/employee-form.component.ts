@@ -57,6 +57,7 @@ export class EmployeeFormComponent implements OnInit {
 
   submitForm(){
     this.formSubmitted.emit(this.employeeForm.value);
+    console.log("IM IN THIS BITCH MOTERHFUCKER");
 
   }
 

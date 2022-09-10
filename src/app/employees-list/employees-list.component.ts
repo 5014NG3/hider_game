@@ -47,9 +47,7 @@ export class EmployeesListComponent implements OnInit {
     }
   }
   
-  submitPic() {
 
-  }
 
   deleteEmployee(id: string) : void {
     this.employeesService.deleteEmployee(id).subscribe({
@@ -61,13 +59,6 @@ export class EmployeesListComponent implements OnInit {
 
 
 
-  /*
-  deletePic(id: string) : void {
-    this.picsService.deletePic(id).subscribe({
-      next: () => this.fetchPics()
-    });
-  }
-  */
 
   //from employ service use getemployees service this return an 
   //observable, subscribe to it with a async pipe in the template
