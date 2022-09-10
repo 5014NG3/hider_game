@@ -10,6 +10,7 @@ import path from "path";
 import bodyParser from "body-parser"
 
 
+
 //load env variables from the .env file, where 
 //the ATLAS_URI is configed
 dotenv.config();
@@ -27,6 +28,7 @@ connectToDB(ATLAS_URI)
         app.use(bodyParser.json())
         app.use(cors());
 
+        
         //use the endpoints
         app.use("/employees", employeeRouter);
         app.use('/images', express.static(path.join('images')));
@@ -38,3 +40,4 @@ connectToDB(ATLAS_URI)
             console.log('Server running at http://localhost:5200...')
         });
     }).catch(error => console.error(error));
+

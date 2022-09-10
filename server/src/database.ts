@@ -2,16 +2,56 @@ import * as mongodb from "mongodb";
 import { Employee } from "./employee";
 
 
+
+
+
 export const collections: {
     //employees is the type and collection is the way it is
     //stored in the db
     employees?: mongodb.Collection<Employee>;
 } = {};
 
+
 export async function connectToDB(uri:string) {
     const client = new mongodb.MongoClient(uri);
     await client.connect();
+    
+    const sqlite3 = require('sqlite3').verbose();
 
+
+    let sdb = new sqlite3.Database('../game.db', (err : Error) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('Connected to the game database.');
+        //sdb.run('CREATE TABLE PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)');
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [69,0,0], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+            console.log('Row was added to the table: ${this.lastID}');
+        });
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [1337,11,43], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+            console.log('Row was added to the table: ${this.lastID}');
+        });
+        
+    });
+
+
+
+
+
+
+
+    sdb.close((err: Error) => {
+        if (err) {
+          console.error(err.message);
+        }
+        console.log('DB closed: Use in function that closes server or the sqlite3 db');
+      });
 
     //name of the databse on mongodb that holds, employee collection
     const db = client.db("testdb");
@@ -34,6 +74,8 @@ export async function connectToDB(uri:string) {
 //might have to create validation for the different data
 //that is saved to the database collections
 //applySchemaValdiation = asv
+
+
 
 async function asv_emp(db: mongodb.Db) {
     const jsonSchema = {
@@ -73,5 +115,7 @@ async function asv_emp(db: mongodb.Db) {
     });
  }
 
+
+ 
 
 
