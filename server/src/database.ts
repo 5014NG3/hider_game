@@ -25,7 +25,7 @@ export async function connectToDB(uri:string) {
         }
         console.log('Connected to the game database.');
 
-       game_emp(sdb);
+       asv_game(sdb);
         
     });
 
@@ -34,14 +34,14 @@ export async function connectToDB(uri:string) {
 
 
 
-
+/*
     sdb.close((err: Error) => {
         if (err) {
           console.error(err.message);
         }
         console.log('DB closed: Use in function that closes server or the sqlite3 db');
       });
-
+*/
     //name of the databse on mongodb that holds, employee collection
     const db = client.db("testdb");
     await asv_emp(db);
@@ -65,7 +65,32 @@ export async function connectToDB(uri:string) {
 //applySchemaValdiation = asv
 
 
-async function game_emp(sdb: typeof sqlite3.Database){
+async function asv_game(sdb: typeof sqlite3.Database){
+    sdb.serialize(() => {
+        sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)`).run().finalize();
+    
+        sdb.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?`, 'PLAYERS', (err: Error, data: JSON) => {
+            console.log(data);
+        });
+    
+        sdb.close();
+    });
+
+
+
+
+
+
+
+
+}
+
+async function init_game(sdb: typeof sqlite3.Database){
+
+    
+
+
+
     sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [73,0,0], (err: Error) => {
         if(err) {
             return console.log(err.message); 
@@ -120,6 +145,10 @@ async function asv_emp(db: mongodb.Db) {
             await db.createCollection("employees", {validator: jsonSchema});
         }
     });
+
+
+    //do same here with sqlite
+
  }
 
 
