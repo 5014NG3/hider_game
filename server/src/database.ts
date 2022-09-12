@@ -10,6 +10,7 @@ export const collections: {
     //employees is the type and collection is the way it is
     //stored in the db
     employees?: mongodb.Collection<Employee>;
+    game?: Array<JSON>;
 } = {};
 
 
@@ -30,18 +31,6 @@ export async function connectToDB(uri:string) {
     });
 
 
-
-
-
-
-/*
-    sdb.close((err: Error) => {
-        if (err) {
-          console.error(err.message);
-        }
-        console.log('DB closed: Use in function that closes server or the sqlite3 db');
-      });
-*/
     //name of the databse on mongodb that holds, employee collection
     const db = client.db("testdb");
     await asv_emp(db);
@@ -51,6 +40,24 @@ export async function connectToDB(uri:string) {
     //db holding collection of employees 
     const employeesCollection = db.collection<Employee>("employees");
     collections.employees = employeesCollection;
+
+    const gameTable = await game_getTable(sdb);
+    collections.game = gameTable;
+    console.log(collections.game);
+
+    await new Promise<void>((resolve,reject) => {
+
+        sdb.close((err: Error) => {
+            if (err) {
+              reject(err);
+            }
+            resolve();
+            console.log('game database closed for now!');
+        });
+    })
+
+
+    //get the game collection
 
 
     
@@ -67,42 +74,81 @@ export async function connectToDB(uri:string) {
 
 async function asv_game(sdb: typeof sqlite3.Database){
     sdb.serialize(() => {
-        sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)`).run().finalize();
-    
+        
         sdb.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?`, 'PLAYERS', (err: Error, data: JSON) => {
-            console.log(data);
+            if(err){
+                console.log(err.message);
+            }
+            
+            if(data){
+                
+                console.log(data);
+            }
+            else{
+                sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)`).run().finalize();
+                console.log("game table doesn't exist")
+                init_game(sdb)
+            }
+
         });
     
-        sdb.close();
     });
 
+}
+
+
+async function game_getTable(sdb: typeof sqlite3.Database){
+    var table;
+
+    await new Promise((resolve,reject) => {
+        sdb.all(`SELECT * FROM PLAYERS`, [], (err:Error, rows: Array<JSON>) => {
+            if (err) {
+              reject(err);
+            }
+
+            resolve(rows);
+
+            table = rows;     
+        });
+
+    })
+
+    console.log("game table retrieved")
 
 
 
-
-
+    return table;
 
 
 }
 
 async function init_game(sdb: typeof sqlite3.Database){
 
+    sdb.serialize(() => {
+
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [73,0,0], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+        });
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [47,11,43], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+        });
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [37,7,0], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+        });
+    })
+
+    console.log("game table initialized")
+
     
 
 
 
-    sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [73,0,0], (err: Error) => {
-        if(err) {
-            return console.log(err.message); 
-        }
-        console.log('Row was added to the table: ${this.lastID}');
-    });
-    sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [47,11,43], (err: Error) => {
-        if(err) {
-            return console.log(err.message); 
-        }
-        console.log('Row was added to the table: ${this.lastID}');
-    });
 
 
 }
