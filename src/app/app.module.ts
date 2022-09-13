@@ -11,6 +11,7 @@ import { EmployeeFormComponent } from './employee-form/employee-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddEmployeeComponent } from './add-employee/add-employee.component';
 import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
+import { SocketioService } from './socketio.service';
 
 
 //this is the list of modules
@@ -29,7 +30,7 @@ import { EditEmployeeComponent } from './edit-employee/edit-employee.component';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [SocketioService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
