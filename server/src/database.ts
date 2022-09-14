@@ -54,7 +54,6 @@ export async function connectToDB(uri:string) {
 
     collections.db_data = db_data
 
-    console.log(collections.db_data)
 
     
 
@@ -152,6 +151,11 @@ async function init_game(sdb: typeof sqlite3.Database){
             }
         });
         sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [37,7,0], (err: Error) => {
+            if(err) {
+                return console.log(err.message); 
+            }
+        });
+        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [1,7,113], (err: Error) => {
             if(err) {
                 return console.log(err.message); 
             }
