@@ -11,6 +11,8 @@ export const collections: {
     //stored in the db
     employees?: mongodb.Collection<Employee>;
     game?: Array<JSON>;
+    db_data?: {employees: any, game: any};
+
 } = {};
 
 
@@ -43,7 +45,20 @@ export async function connectToDB(uri:string) {
 
     const gameTable = await game_getTable(sdb);
     collections.game = gameTable;
-    console.log(collections.game);
+
+    const db_data = {
+        employees: await collections.employees.find({}).toArray(),
+        game: collections.game
+    }
+    
+
+    collections.db_data = db_data
+
+    console.log(collections.db_data)
+
+    
+
+
 
     await new Promise<void>((resolve,reject) => {
 

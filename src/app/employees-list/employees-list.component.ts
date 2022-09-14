@@ -14,6 +14,8 @@ export class EmployeesListComponent implements OnInit {
   //need this shit for the images
 
   employees$: Observable<Employee[]> = new Observable();
+  game$: Observable<[]> = new Observable();
+  db_data$: Observable<{employees: any, game: any}> = new Observable();
 
 
 
@@ -68,7 +70,15 @@ export class EmployeesListComponent implements OnInit {
   //the async pipe automatically render list of employees as soon
   // as the data is available.
   private fetchEmployees(): void {
+
     this.employees$ = this.employeesService.getEmployees();
+    this.game$ = this.employeesService.getGame();
+    
+
+    //console.log(this.game$);
+
+
+
   }
 
 

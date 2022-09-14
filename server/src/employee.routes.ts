@@ -1,5 +1,6 @@
 import * as express from "express";
 import * as mongodb from "mongodb";
+import test from "node:test";
 import { collections } from "./database";
 
 export const employeeRouter = express.Router();
@@ -12,8 +13,14 @@ employeeRouter.get("/", async (_req, res) => {
     try {
         //find method b/c passing in an empty object {} we'll get 
         //all employees in the db
-        const employees = await collections.employees.find({}).toArray();
-        res.status(200).send(employees);
+        const db_data = await collections.db_data;
+
+
+
+        res.status(200).send(db_data);
+
+
+
     } 
     catch (error){
         res.status(500).send(error.message);
