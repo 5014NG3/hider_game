@@ -15,8 +15,6 @@ employeeRouter.get("/", async (_req, res) => {
         //all employees in the db
         const db_data = await collections.db_data;
 
-
-
         res.status(200).send(db_data);
 
 

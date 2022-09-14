@@ -16,28 +16,9 @@ export class EmployeeService {
   constructor(private httpClient: HttpClient) { }
 
 
-  //used to fetch full list of employees
+
   private refreshEmployees() {
 
-
-
-    /*
-    this.httpClient.get<[]> (`${this.url}/employees`)
-      .subscribe(game => {
-        this.game$.next(game);
-
-      });
-
-
-
-    
-    this.httpClient.get<Employee[]> (`${this.url}/employees`)
-      .subscribe(employees => {
-        //console.log(employees)
-        this.employees$.next(employees);
-
-      });
-      */
       
 
 
