@@ -11,7 +11,6 @@ export const collections: {
     //stored in the db
     employees?: mongodb.Collection<Employee>;
     game?: Array<JSON>;
-    db_data?: {employees: mongodb.Collection<Employee>, game: Array<JSON>};
 
 } = {};
 
@@ -48,17 +47,7 @@ export async function connectToDB(uri:string) {
     collections.game = gameTable;
 
 
-    const db_data = {
-        employees: collections.employees,
-        game: collections.game
-    }
-    
 
-    collections.db_data = db_data
-
-
-
-    //console.log(typeof collections.db_data.employees)
 
 
     

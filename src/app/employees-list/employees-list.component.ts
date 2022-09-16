@@ -15,7 +15,6 @@ export class EmployeesListComponent implements OnInit {
 
   employees$: Observable<Employee[]> = new Observable();
   game$: Observable<[]> = new Observable();
-  db_data$: Observable<{employees: any, game: any}> = new Observable();
 
 
 
@@ -73,9 +72,8 @@ export class EmployeesListComponent implements OnInit {
 
     this.employees$ = this.employeesService.getEmployees();
     this.game$ = this.employeesService.getGame();
-    
 
-    //console.log(this.game$);
+
 
 
 
