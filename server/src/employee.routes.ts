@@ -13,9 +13,16 @@ employeeRouter.get("/", async (_req, res) => {
     try {
         //find method b/c passing in an empty object {} we'll get 
         //all employees in the db
-        const db_data = await collections.db_data;
+        //const db_data = await collections.db_data;
 
-        res.status(200).send(db_data);
+        const send_db = {
+            employees: await collections.db_data.employees.find({}).toArray(),
+            game: await collections.db_data.game
+        }
+
+
+
+        res.status(200).send(send_db);
 
 
 
@@ -39,11 +46,15 @@ employeeRouter.get("/:id", async(req,res) => {
     try {
         //id provided as parameter
         const id = req?.params?.id;
+        //console.log("id: " + id )
         //ObjectId method used to convert string ID to MongoDB
         //ObjectId object
         const query = {_id: new mongodb.ObjectId(id)};
+        //console.log(query)
         //use findOne method to find employee with given ID
-        const employee = await collections.employees.findOne(query);
+        //console.log(collections.employees)
+        const employee = await collections.db_data.employees.findOne(query);
+    
 
 
         // id fond
@@ -72,7 +83,13 @@ employeeRouter.post("/",async (req,res) => {
         //insert to collections, receive, insertOne method , inserts
         //employee to the db, if success, send 201 Created with ID of 
         //employee, o/w send 500 Internal Server Error
-        const result = await collections.employees.insertOne(employee);
+
+        //this is where the random id is created
+
+        //console.log("id: " + Math.random().toString(36).substring(2, 5));
+
+        const result = await collections.db_data.employees.insertOne(employee);
+        console.log(result)
 
         if(result.acknowledged){
             res.status(201).send(`Created a new employee: ID ${result.insertedId}`);
@@ -105,7 +122,7 @@ employeeRouter.put("/:id", async(req,res) => {
 
         //use updateOne to update the employee with the corresponding
         //id, if success send 200 Ok response
-        const result = await collections.employees.updateOne(query, {$set: employee});
+        const result = await collections.db_data.employees.updateOne(query, {$set: employee});
 
         if (result && result.matchedCount){
             res.status(200).send(`Updated an employee: ID ${id}.`);
@@ -136,7 +153,7 @@ employeeRouter.delete("/:id", async(req,res) => {
         //convert to mongodb object
         const query = {_id: new mongodb.ObjectId(id)};
         //deleteOne method to delete employee with the id
-        const result = await collections.employees.deleteOne(query);
+        const result = await collections.db_data.employees.deleteOne(query);
 
         //result.deletedCount == 0 means employee isn't found
         

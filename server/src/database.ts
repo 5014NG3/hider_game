@@ -11,7 +11,7 @@ export const collections: {
     //stored in the db
     employees?: mongodb.Collection<Employee>;
     game?: Array<JSON>;
-    db_data?: {employees: any, game: any};
+    db_data?: {employees: mongodb.Collection<Employee>, game: Array<JSON>};
 
 } = {};
 
@@ -43,16 +43,22 @@ export async function connectToDB(uri:string) {
     const employeesCollection = db.collection<Employee>("employees");
     collections.employees = employeesCollection;
 
+
     const gameTable = await game_getTable(sdb);
     collections.game = gameTable;
 
+
     const db_data = {
-        employees: await collections.employees.find({}).toArray(),
+        employees: collections.employees,
         game: collections.game
     }
     
 
     collections.db_data = db_data
+
+
+
+    //console.log(typeof collections.db_data.employees)
 
 
     
@@ -99,7 +105,7 @@ async function asv_game(sdb: typeof sqlite3.Database){
                 console.log(data);
             }
             else{
-                sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID INTEGER PRIMARY KEY, X INTEGER, Y INTEGER)`).run().finalize();
+                sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID TEXT PRIMARY KEY, NAME TEXT, POSITION TEXT, LEVEL TEXT)`).run().finalize();
                 console.log("game table doesn't exist")
                 init_game(sdb)
             }
