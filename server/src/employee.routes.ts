@@ -2,6 +2,7 @@ import * as express from "express";
 import * as mongodb from "mongodb";
 import test from "node:test";
 import { collections } from "./database";
+const sqlite3 = require('sqlite3').verbose();
 
 export const employeeRouter = express.Router();
 employeeRouter.use(express.json());
@@ -13,6 +14,7 @@ employeeRouter.get("/", async (_req, res) => {
     try {
         //find method b/c passing in an empty object {} we'll get 
         //all employees in the db
+
         
 
         const send_db = {
@@ -21,6 +23,7 @@ employeeRouter.get("/", async (_req, res) => {
         }
 
 
+        console.log("uid: " + Math.random().toString(36).substring(2, 10));
 
         res.status(200).send(send_db);
 
@@ -51,6 +54,39 @@ employeeRouter.get("/:id", async(req,res) => {
         const query = {_id: new mongodb.ObjectId(id)};
         //use findOne method to find employee with given ID
         const employee = await collections.employees.findOne(query);
+
+
+        const players_id = 1;
+
+        
+
+        let sdb = new sqlite3.Database('../game.db', (err : Error) => {
+            if (err) {
+              console.error(err.message);
+            }    
+            
+        });
+
+        await sdb.serialize(() => {
+        
+            sdb.get(`SELECT * FROM PLAYERS WHERE UID=?`, players_id, (err: Error, data: JSON) => {
+                if(err){
+                    console.log(err.message);
+                }
+                
+                if(data){
+                    const field = 'NAME';
+                    console.log(data[field as keyof JSON]);
+                }
+                else{
+                    console.log("UID DOESN'T EXIST")
+                }
+    
+            });
+        
+        });
+
+
     
 
 
@@ -83,10 +119,9 @@ employeeRouter.post("/",async (req,res) => {
 
         //this is where the random id is created
 
-        //console.log("id: " + Math.random().toString(36).substring(2, 5));
+        //console.log("uid: " + Math.random().toString(36).substring(2, 5));
 
         const result = await collections.employees.insertOne(employee);
-        console.log(result)
 
         if(result.acknowledged){
             res.status(201).send(`Created a new employee: ID ${result.insertedId}`);

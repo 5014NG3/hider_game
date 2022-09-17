@@ -135,22 +135,22 @@ async function init_game(sdb: typeof sqlite3.Database){
 
     sdb.serialize(() => {
 
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [73,0,0], (err: Error) => {
+        sdb.run('INSERT INTO PLAYERS(UID, NAME, POSITION, LEVEL) VALUES(?, ?, ?, ?)', [73,"HUBERT","YESSIRSKI", "LEVEL"], (err: Error) => {
             if(err) {
                 return console.log(err.message); 
             }
         });
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [47,11,43], (err: Error) => {
+        sdb.run('INSERT INTO PLAYERS(UID, NAME, POSITION, LEVEL) VALUES(?, ?, ?, ?)', [47,"JUCIERY","loololol", "oness"], (err: Error) => {
             if(err) {
                 return console.log(err.message); 
             }
         });
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [37,7,0], (err: Error) => {
+        sdb.run('INSERT INTO PLAYERS(UID, NAME, POSITION, LEVEL) VALUES(?, ?, ?, ?)', [37,"WINEREI","575858", "twosss"], (err: Error) => {
             if(err) {
                 return console.log(err.message); 
             }
         });
-        sdb.run('INSERT INTO PLAYERS(UID, X, Y) VALUES(?, ?, ?)', [1,7,113], (err: Error) => {
+        sdb.run('INSERT INTO PLAYERS(UID, NAME, POSITION, LEVEL) VALUES(?, ?, ?, ?)', [1,"loserman","djhkds", "dosis"], (err: Error) => {
             if(err) {
                 return console.log(err.message); 
             }

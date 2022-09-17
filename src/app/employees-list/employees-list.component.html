@@ -15,9 +15,9 @@
       <tbody>
         <!-- this is where the async pipe is-->
           <tr *ngFor = "let user of game$ | async">
-            <td>{{user.UID}}</td>
-            <td>{{user.X}}</td>
-            <td>{{user.Y}}</td>
+            <td>{{user.NAME}}</td>
+            <td>{{user.POSITION}}</td>
+            <td>{{user.LEVEL}}</td>
             
 
           </tr>
