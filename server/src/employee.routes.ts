@@ -26,7 +26,6 @@ async function getPlayersHelper(sdb: typeof sqlite3.Database){
 
     })
 
-    //console.log("game table retrieved")
 
 
 
@@ -50,7 +49,8 @@ employeeRouter.get("/", async (_req, res) => {
         
 
         const send_db = {
-            employees: await collections.employees.find({}).toArray(),
+            employees: {},
+            //employees: await collections.employees.find({}).toArray(),
             game: await getPlayersHelper(sdb)
 
             
@@ -88,15 +88,8 @@ employeeRouter.get("/:id", async(req,res) => {
 
 
     try {
-        //id provided as parameter
         const id = req?.params?.id;
-        //ObjectId method used to convert string ID to MongoDB
-        //ObjectId object
-        //const query = {_id: new mongodb.ObjectId(id)};
-        //use findOne method to find employee with given ID
-        //const employee = await collections.employees.findOne(query);
-        //console.log(id)
-        //console.log("a")
+
 
 
         let sdb = await new sqlite3.Database('../game.db', (err : Error) => {
@@ -105,8 +98,6 @@ employeeRouter.get("/:id", async(req,res) => {
             }    
             
         });
-
-        //console.log("b")
         
 
         var player = JSON
@@ -127,12 +118,7 @@ employeeRouter.get("/:id", async(req,res) => {
 
         })
     
-        //console.log("game table retrieved")
 
-        //console.log(player['NAME' as keyof JSON ])
-    
-    
-        console.log(player)
 
 
         // id fond
@@ -184,26 +170,15 @@ employeeRouter.post("/",async (req,res) => {
 
         await sdb.run('INSERT INTO PLAYERS(UID, NAME, POSITION, LEVEL) VALUES(?, ?, ?, ?)', [new_uid,employee['name' as keyof JSON],employee['position' as keyof JSON], employee['level' as keyof JSON]], (err: Error) => {
             if(err) {
+                res.status(500).send("Failed to create a new employee.");
                 return console.log(err.message); 
+
             }
             res.status(201).send(`Created a new employee: ID ${new_uid}`);
 
         });
 
 
-        /*
-        const result = await collections.employees.insertOne(employee);
-
-
-        if(result.acknowledged){
-            
-            
-            res.status(201).send(`Created a new employee: ID ${result.insertedId}`);
-        }
-        else{
-            res.status(500).send("Failed to create a new employee.");
-        }
-        */
 
     }
     catch (error){
@@ -224,8 +199,9 @@ employeeRouter.put("/:id", async(req,res) => {
         const id = req?.params?.id;
         const employee = req.body;
 
+
         //convert to mongodb object
-        const query = {_id: new mongodb.ObjectId(id)};
+        //const query = {_id: new mongodb.ObjectId(id)};
 
         let sdb = await new sqlite3.Database('../game.db', (err : Error) => {
             if (err) {
@@ -237,29 +213,15 @@ employeeRouter.put("/:id", async(req,res) => {
 
         await sdb.run('UPDATE PLAYERS SET NAME = ?, POSITION = ?, LEVEL = ? WHERE UID = ?', [employee['name' as keyof JSON],employee['position' as keyof JSON], employee['level' as keyof JSON], id], (err: Error) => {
             if(err) {
+                res.status(404).send(`Failed to find an employee: ID ${id}`);
                 return console.log(err.message); 
             }
+
             res.status(200).send(`Updated an employee: ID ${id}.`);
+            
         });
         
 
-
-
-        //use updateOne to update the employee with the corresponding
-        //id, if success send 200 Ok response
-        /*
-        const result = await collections.employees.updateOne(query, {$set: employee});
-
-        if (result && result.matchedCount){
-            res.status(200).send(`Updated an employee: ID ${id}.`);
-        }
-        else if (!result.matchedCount){
-            res.status(404).send(`Failed to find an employee: ID ${id}`);
-        }
-        else {
-            res.status(304).send(`Failed to update an employee: ID ${id}`);
-        }
-        */
 
     }
     catch (error){
@@ -277,9 +239,7 @@ employeeRouter.delete("/:id", async(req,res) => {
     try{
         //evaulate to undefined if id isn't present
         const id = req?.params?.id;
-        //convert to mongodb object
-        //const query = {_id: new mongodb.ObjectId(id)};
-        //deleteOne method to delete employee with the id
+
         
         
         let sdb = await new sqlite3.Database('../game.db', (err : Error) => {
@@ -292,25 +252,12 @@ employeeRouter.delete("/:id", async(req,res) => {
         
         await sdb.run('DELETE FROM PLAYERS WHERE UID = ?', [id], (err: Error) => {
             if(err) {
+                res.status(400).send(`Failed to remove an employee: ID ${id}`);
                 return console.log(err.message); 
             }
             res.status(202).send(`Removed an employee: ID ${id}`);
         });
         
-        //result.deletedCount == 0 means employee isn't found
-        /*
-        const result = await collections.employees.deleteOne(query);
-
-        if (result && result.deletedCount){
-            res.status(202).send(`Removed an employee: ID ${id}`);
-        }
-        else if(!result){
-            res.status(400).send(`Failed to remove an employee: ID ${id}`);
-        }
-        else if(!result.deletedCount) {
-            res.status(404).send(`Failed to find an employee: ID ${id}`);
-        }
-        */
         
     }
     catch(error){

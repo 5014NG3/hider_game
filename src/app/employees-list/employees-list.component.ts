@@ -16,37 +16,17 @@ export class EmployeesListComponent implements OnInit {
   employees$: Observable<Employee[]> = new Observable();
   game$: Observable<[]> = new Observable();
 
-
-
-  form: FormGroup;
-
-  imageData: string;
   
   constructor(private employeesService: EmployeeService) { }
 
   //called when component is rendered on the page
   ngOnInit(): void {
     this.fetchEmployees();
-    this.form = new FormGroup({
-      image: new FormControl(null)
-    });
     
   }
 
 
-  onFileSelect(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    console.log(file);
-    this.form.patchValue({ image: file });
-    const allowedMimeTypes = ["image/png", "image/jpeg", "image/jpg"];
-    if (file && allowedMimeTypes.includes(file.type)) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.imageData = reader.result as string;
-      };
-      reader.readAsDataURL(file);
-    }
-  }
+
   
 
 

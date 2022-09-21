@@ -8,7 +8,6 @@
               <th>Position</th>
               <th>Level</th>
               <th>Action</th>
-              <th>Upload</th>
           </tr>
       </thead>
 
@@ -27,16 +26,7 @@
                   <button class="btn btn-danger" (click)="deleteEmployee(user.UID || '')">Delete</button>
                   
               </td>
-              <td>
-                <!-- Replace with the click command to open up the window that lets the user upload shit-->
-                <!-- This leads to employees/edit/{whatever the fuck the id is}-->  
-                <div>
-                  <label for = "ass" class = "btn btn-primary me-1"  >Choose pic</label>
-                  <input id = "ass" (change) = "onFileSelect($event)" style="display:none;" type = "file">
 
-
-                </div>
-              </td>
           </tr>
       </tbody>
   </table>

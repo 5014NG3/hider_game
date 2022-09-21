@@ -36,7 +36,7 @@ export class EditEmployeeComponent implements OnInit {
   }
 
   editEmployee(employee: Employee){
-    this.employeeService.updateEmployee(this.employee.value._id || '', employee)
+    this.employeeService.updateEmployee(this.employee.value["UID" as keyof JSON] || '', employee)
       .subscribe ({
         next: () => {
           this.router.navigate(['/employees']);

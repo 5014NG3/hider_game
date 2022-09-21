@@ -58,10 +58,13 @@ export class EmployeeService {
   }
 
   updateEmployee(id: string, employee: Employee): Observable<string> {
+    console.log("id " + id)
     return this.httpClient.put(`${this.url}/employees/${id}`, employee, {responseType: 'text'});
   }
 
   deleteEmployee(id: string): Observable<string> {
+    console.log("id " + id)
+
     return this.httpClient.delete(`${this.url}/employees/${id}`, {responseType: 'text'});
   }
 
