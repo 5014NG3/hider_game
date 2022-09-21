@@ -14,24 +14,17 @@
 
       <tbody>
         <!-- this is where the async pipe is-->
-          <tr *ngFor = "let user of game$ | async">
-            <td>{{user.NAME}}</td>
-            <td>{{user.POSITION}}</td>
-            <td>{{user.LEVEL}}</td>
-            
-
-          </tr>
-          <tr *ngFor="let employee of employees$ | async">
-              <td>{{employee.name}}</td>
-              <td>{{employee.position}}</td>
-              <td>{{employee.level}}</td>
+          <tr *ngFor="let user of game$ | async">
+              <td>{{user.NAME}}</td>
+              <td>{{user.POSITION}}</td>
+              <td>{{user.LEVEL}}</td>
               <td>
                   <!--  few actions in this template: editing, deleting, and adding new employees 
                 [routerLink] attribute used to navigate to '/employees/edit/:id' route 
                  (click) even used to call the deleteEmployee() method is in the EmployeeService class-->
 
-                  <button class="btn btn-primary me-1" [routerLink]="['edit/', employee._id]">Edit</button>
-                  <button class="btn btn-danger" (click)="deleteEmployee(employee._id || '')">Delete</button>
+                  <button class="btn btn-primary me-1" [routerLink]="['edit/', user.UID]">Edit</button>
+                  <button class="btn btn-danger" (click)="deleteEmployee(user.UID || '')">Delete</button>
                   
               </td>
               <td>

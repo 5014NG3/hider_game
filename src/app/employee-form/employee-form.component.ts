@@ -40,9 +40,9 @@ export class EmployeeFormComponent implements OnInit {
   ngOnInit() {
     this.initialState.subscribe(  employee => {
       this.employeeForm = this.fb.group({
-        name: [employee.name, [Validators.required, Validators.minLength(3)]],
-        position: [employee.position, [Validators.required, Validators.minLength(5)]],
-        level: [employee.level, [Validators.required]]
+        name: [employee['NAME' as keyof JSON], [Validators.required, Validators.minLength(3)]],
+        position: [employee['POSITION' as keyof JSON], [Validators.required, Validators.minLength(5)]],
+        level: [employee['LEVEL' as keyof JSON], [Validators.required]]
 
       });
 

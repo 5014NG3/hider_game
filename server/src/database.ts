@@ -96,7 +96,7 @@ async function asv_game(sdb: typeof sqlite3.Database){
             else{
                 sdb.prepare(`CREATE TABLE IF NOT EXISTS PLAYERS (UID TEXT PRIMARY KEY, NAME TEXT, POSITION TEXT, LEVEL TEXT)`).run().finalize();
                 console.log("game table doesn't exist")
-                init_game(sdb)
+                //init_game(sdb)
             }
 
         });
