@@ -1,4 +1,3 @@
-import * as mongodb from "mongodb";
 import { Employee } from "./employee";
 
 
