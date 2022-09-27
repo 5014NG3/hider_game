@@ -1,6 +1,7 @@
 import { Employee } from "./employee";
 
 
+
 const sqlite3 = require('sqlite3').verbose();
 
 
@@ -81,9 +82,9 @@ export async function connectToDB() {
 
 
 async function asv_game(sdb: typeof sqlite3.Database){
-    sdb.serialize(() => {
+    //sdb.serialize(() => {
         
-        sdb.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?`, 'PLAYERS', (err: Error, data: JSON) => {
+        await sdb.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?`, 'PLAYERS', (err: Error, data: JSON) => {
             if(err){
                 console.log(err.message);
             }
@@ -99,8 +100,27 @@ async function asv_game(sdb: typeof sqlite3.Database){
             }
 
         });
+
+        
+        await sdb.get(`SELECT name FROM sqlite_master WHERE type='table' AND name=?`, 'CONNECTIONS', (err: Error, data: JSON) => {
+            if(err){
+                console.log(err.message);
+            }
+            
+            if(data){
+                
+                console.log(data);
+            }
+            else{
+                sdb.prepare(`CREATE TABLE IF NOT EXISTS CONNECTIONS (IP TEXT PRIMARY KEY, UID TEXT, LOBBY TEXT)`).run().finalize();
+                console.log("connections table doesn't exist")
+                //init_game(sdb)
+            }
+
+        });
+        
     
-    });
+    //});
 
 }
 

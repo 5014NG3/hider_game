@@ -28,6 +28,15 @@
               </td>
 
           </tr>
+          
+          <tr *ngFor="let item of (user_info$ | async) | keyvalue">
+            
+            <td>{{item.value.UID}}</td>
+            <td>{{item.value.IP}}</td>
+            <td>{{item.value.LOBBY}}</td>
+
+
+        </tr>
       </tbody>
   </table>
 

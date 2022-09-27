@@ -5,6 +5,10 @@ const sqlite3 = require('sqlite3').verbose();
 export const employeeRouter = express.Router();
 employeeRouter.use(express.json());
 
+
+import { user_id} from "./server"
+
+
 //'GET /employees' endpoint, gets all employees in the db
 // route is '/' because we'll register all endpoints from this 
 //file under the '/employees' route
@@ -34,6 +38,9 @@ async function getPlayersHelper(sdb: typeof sqlite3.Database){
 }
 
 employeeRouter.get("/", async (_req, res) => {
+
+
+
     try {
         //find method b/c passing in an empty object {} we'll get 
         //all employees in the db
@@ -45,12 +52,12 @@ employeeRouter.get("/", async (_req, res) => {
             
         });
 
-        
-
         const send_db = {
             employees: {},
             //employees: await collections.employees.find({}).toArray(),
-            game: await getPlayersHelper(sdb)
+            game: await getPlayersHelper(sdb),
+
+            user_info:  await user_id
 
             
             

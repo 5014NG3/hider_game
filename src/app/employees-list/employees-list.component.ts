@@ -15,6 +15,7 @@ export class EmployeesListComponent implements OnInit {
 
   employees$: Observable<Employee[]> = new Observable();
   game$: Observable<[]> = new Observable();
+  user_info$: Observable<[]> = new Observable();
 
   
   constructor(private employeesService: EmployeeService) { }
@@ -52,6 +53,7 @@ export class EmployeesListComponent implements OnInit {
 
     this.employees$ = this.employeesService.getEmployees();
     this.game$ = this.employeesService.getGame();
+    this.user_info$ = this.employeesService.getUserinfo();
 
 
 

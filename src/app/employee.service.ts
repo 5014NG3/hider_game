@@ -11,6 +11,7 @@ export class EmployeeService {
   private url = 'http://localhost:5200';
   private employees$: Subject<Employee[]> = new Subject();
   private game$: Subject<[]> = new Subject();
+  private user_info$: Subject<[]> = new Subject();
 
   constructor(private httpClient: HttpClient) { }
 
@@ -18,15 +19,19 @@ export class EmployeeService {
 
   private refreshEmployees() {
 
+    
+
       
 
 
     
-    this.httpClient.get<{employees: Employee[], game: []}> (`${this.url}/employees`)
+    this.httpClient.get<{employees: Employee[], game: [], user_info: []}> (`${this.url}/employees`)
       .subscribe(db_data => {
-
         this.employees$.next(db_data.employees);
         this.game$.next(db_data.game)
+        this.user_info$.next(db_data.user_info)
+        //this.user_info$.next()
+        
 
 
       });
@@ -47,23 +52,27 @@ export class EmployeeService {
     return this.game$;
   }
 
+  getUserinfo(): Subject<[]> {
+    this.refreshEmployees();
+    return this.user_info$;
+  }
+
   getEmployee(id: string): Observable<Employee> {
     return this.httpClient.get<Employee>(`${this.url}/employees/${id}`);
   }
 
-
+  
+  
   //maybe i can change the type when creating pics in the database 
   createEmployee(employee: Employee) : Observable<string> {
     return this.httpClient.post(`${this.url}/employees`, employee, {responseType: 'text'});
   }
 
   updateEmployee(id: string, employee: Employee): Observable<string> {
-    console.log("id " + id)
     return this.httpClient.put(`${this.url}/employees/${id}`, employee, {responseType: 'text'});
   }
 
   deleteEmployee(id: string): Observable<string> {
-    console.log("id " + id)
 
     return this.httpClient.delete(`${this.url}/employees/${id}`, {responseType: 'text'});
   }
