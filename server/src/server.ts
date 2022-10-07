@@ -135,12 +135,23 @@ connectToDB()
                 //io.emit('server msg', `server received ur meessage: ${msg}`);
                 //console.log(String(user_id.values["IP" as keyof JSON]))
                 //io.emit('server msg', user_id.values)
-
-
                 io.to(socket.id).emit('server msg', user_id.values)
 
                 console.log("received: " + socket.id)
             })
+
+            socket.on('user update', (msg) => {
+                console.log('users that updated: ' + msg);
+                //io.emit('server msg', `server received ur meessage: ${msg}`);
+                //console.log(String(user_id.values["IP" as keyof JSON]))
+                //io.emit('server msg', user_id.values)
+                io.emit('server update', user_id.values["UID" as keyof JSON])
+
+                console.log("received: " + socket.id)
+            })
+
+
+
 
         });
         

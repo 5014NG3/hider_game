@@ -26,14 +26,24 @@ export class SocketioService {
 
 
 
-
     this.socket.on('server msg', async (data:any) => {
       console.log("IP: " + data["IP" as keyof JSON])
       console.log("UID: " + data["UID" as keyof JSON])
       console.log("LOBBY: " + data["LOBBY" as keyof JSON])
+      
 
+      this.socket.emit('user update', data["UID" as keyof JSON])
 
     })
+
+
+    this.socket.on('server update', async (data:any) => {
+      console.log(data + " caused an update")
+      
+
+    })
+
+
 
   }
 
